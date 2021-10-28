@@ -1,0 +1,20 @@
+"""
+src/allreduce_max.py
+"""
+
+import torch
+import torch.distributed as dist
+
+dist.init_process_group("nccl")
+rank = dist.get_rank()
+torch.cuda.set_device(rank)
+
+tensor = torch.ones(2, 2).to(torch.cuda.current_device()) * rank
+# rank==0 => [[0, 0], [0, 0]]
+# rank==1 => [[1, 1], [1, 1]]
+# rank==2 => [[2, 2], [2, 2]]
+# rank==3 => [[3, 3], [3, 3]]
+
+dist.all_reduce(tensor, op=torch.distributed.ReduceOp.MAX)
+
+print(f"rank {rank}: {tensor}\n")

@@ -1,0 +1,26 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "scheduler": {
+    "type": "WarmupDecayLR",
+    "params": {
+      "total_num_steps": 300,
+      "warmup_min_lr": 0,
+      "warmup_max_lr": 3e-5,
+      "warmup_num_steps": 30
+    }
+  },
+  "fp16": {
+    "enabled": true,
+    "initial_scale_power": 32,
+    "loss_scale_window": 1000,
+    "hysteresis": 2,
+    "min_loss_scale": 1
+  },
+  "zero_optimization": {
+    "stage": 1
+  },
+  "zero_allow_untested_optimizer": true,
+  "wall_clock_breakdown": false,
+  "steps_per_print": 9999999999
+}
